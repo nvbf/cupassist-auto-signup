@@ -1,0 +1,17 @@
+{
+  "name": "nightwatch-automate-signup-cupassist",
+  "version": "1.0.0",
+  "description":
+    "automaticly signup up ppl to a cupassist (Profixio) tournament ",
+  "main": "main.js",
+  "scripts": {
+    "start": "nightwatch main.js"
+  },
+  "keywords": ["Cupassist", "Profixio"],
+  "author": "Sindre Øye Svendby",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "2.37",
+    "nightwatch": "0.9.19"
+  }
+}
