@@ -1,6 +1,6 @@
 {
   "src_folders": ["."],
-  "silent": false,
+  "silent": true,
   "globals_path": "globals/chromedriver",
   "selenium": {
     "start_process": false,
@@ -13,7 +13,7 @@
       "selenium_port": 9515,
       "selenium_host": "localhost",
       "default_path_prefix": "",
-      "silent": false,
+      "silent": true,
       "desiredCapabilities": {
         "browserName": "chrome",
         "chromeOptions": {
