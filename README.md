@@ -37,6 +37,8 @@ e.g `http:///127.0.0.1:16000`
 
 e.g `https://www.profixio.com/pamelding/redirect.php?tknavn=<profixio-short-name-here>`
 
+`API_TOURNAMENT_ID` - the tournament id from the API (not profixio).
+
 # Run
 
 to make this as easy as possible and make sure you can rerun parts fast. it's split into two parts.

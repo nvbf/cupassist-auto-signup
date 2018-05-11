@@ -30,9 +30,6 @@ function getData(result) {
   return result.data;
 }
 
-const testID = 193;
-const osloRT = 198;
-
 async function apiGetPlayer(id) {
   const players = await apiGetPlayers();
   const playersArray = players.filter(({ SpillerId }) => SpillerId == id);
@@ -53,7 +50,7 @@ async function apiGetPlayers() {
 }
 
 async function main() {
-  const result = await apiGetTournament(osloRT);
+  const result = await apiGetTournament(process.env.API_TOURNAMENT_ID);
   const kvinneKlassen = result["Klasser"][0]["Lag"];
   const gutteKlassen = result["Klasser"][1]["Lag"];
   log(`K: ${kvinneKlassen}`);
