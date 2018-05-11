@@ -58,5 +58,6 @@ Red means problems ;)
 
 ## Know problems
 
-some of the players in the database do not have a profixio id, then we can not sign the player up.
-some of the players have duplicates entries, this could lead to a problem.
+* some of the players in the database do not have a profixio id, then we can not sign the player up.
+* some of the players have duplicates entries, this could lead to a problem.
+* the tournament needs to be open for ppl to signup. So if this fails, check if you are able to sign someone up manually
