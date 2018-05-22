@@ -42,43 +42,8 @@ module.exports = {
       .click("input[type=submit]")
       .assert.visible("input")
       .click("input")
-      .pause(1200)
       .url("https://www.profixio.com/pamelding/svb_velg_spillere.php")
-      .waitForElementVisible("body", 3000)
-      .url("https://www.profixio.com/pamelding/svb_sok_spillere.php")
-      .waitForElementVisible("body", 3000)
-      .setValue("input[type=text]", "Svendby")
-      .click("input[type=submit]")
-      .execute(
-        function(args) {
-          return document.getElementsByTagName("option")[0].value;
-        },
-        [],
-        result => {
-          console.log(`Result is ${JSON.stringify(result.value)}`);
-          player1Id = result.value;
-        }
-      )
-      .url("https://www.profixio.com/pamelding/svb_sok_spillere.php")
-      .waitForElementVisible("body", 3000)
-      .setValue("input[type=text]", "Tveitan")
-      .click("input[type=submit]")
-      .execute(
-        function(args) {
-          return document.getElementsByTagName("option")[0].value;
-        },
-        [],
-        result => {
-          console.log(`Result is ${JSON.stringify(result.value)}`);
-          player2Id = result.value;
-        }
-      )
-      .getCookies(function callback(result) {
-        browserCookies = result.value;
-      })
-      .url("https://www.profixio.com/pamelding/svb_velg_spillere.php")
-      .waitForElementVisible("body", 3000);
-    browser
+      .waitForElementVisible("input#subm_btt", 3000)
       .perform(function(done) {
         browser.execute(
           function(id1, id2, lastName1, firstName1, lastName2, firstName2) {
@@ -95,9 +60,7 @@ module.exports = {
           done
         );
       })
-
       .click("input#subm_btt")
-      .pause(1200)
       .url("https://www.profixio.com/pamelding/svb_reg_lag_form.php?a=new2")
       .waitForElementVisible("input", 3000)
       .click(`select option[value=${klasse}]`)
