@@ -125,7 +125,7 @@ async function runNightwatch(args) {
 
   const command = `-s "${Klasse}" -s "${profixioIdSpiller1}" -s "${firstName1}" -s "${lastName1}" -s "${profixioIdSpiller2}" -s "${firstName2}" -s "${lastName2}"`;
   try {
-    console.log(`nightwatch main.js ${command}`);
+    console.log(`./node_modules/.bin/nightwatch main.js ${command}`);
     //const { stdout, stderr } = await exec(`nightwatch main.js ${command}`);
     //console.log('stdout:', stdout);
     //console.log('stderr:', stderr);
