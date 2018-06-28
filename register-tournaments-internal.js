@@ -1,8 +1,6 @@
 const nwrun = require("nwrun");
-
-const profixioTurneringsId = 23590;
-const shortName = "rt_master_oslo_18";
-const password = "5511";
+require("dotenv").config();
+const { TX_TURNERING_ID, TX_SHORTNAME, TX_PASSWORD } = process.env;
 
 function registerNightwatch({
   matchId,
@@ -16,9 +14,9 @@ function registerNightwatch({
   set3AwayPoints,
   homeTeamWon
 }) {
-  process.env.password = password;
-  process.env.shortName = shortName;
-  process.env.turneringsId = profixioTurneringsId;
+  process.env.password = TX_PASSWORD;
+  process.env.shortName = TX_SHORTNAME;
+  process.env.turneringsId = TX_TURNERING_ID;
   process.env.matchId = matchId;
   process.env.setHome = setHome;
   process.env.setAway = setAway;
@@ -32,21 +30,16 @@ function registerNightwatch({
 
   nwrun(
     {
-      // argv: argv,
-      // force: argv.force,
-      // target: argv.target,
-      // standalone: argv.standalone,
-      src_folders: process.cwd() + "/tests",
-      output_folder: process.cwd() + "/reports",
+      src_folders: __dirname + "/tests",
       target: "default"
-      // config_path: __dirname + "/nightwatch.json"
     },
     function(success) {
       if (!success) {
-        console.log("Registered ");
-        return false;
+        console.log("Failed:" + matchId);
+        process.exit(-1);
       }
-      return true;
+      console.log("success:" + matchId);
+      process.exit(0);
     }
   );
 }

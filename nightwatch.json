@@ -15,10 +15,9 @@
       "default_path_prefix": "",
       "silent": true,
       "desiredCapabilities": {
-        "browserName": "chromium-browser",
+        "browserName": "chrome",
         "chromeOptions": {
-          "args": ["--no-sandbox", "--headless"],
-          "binary": "/usr/bin/chromium-browser"
+          "args": ["--no-sandbox"]
         },
         "acceptSslCerts": true
       }

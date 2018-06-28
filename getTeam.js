@@ -51,12 +51,14 @@ async function apiGetPlayers() {
 
 async function main() {
   const result = await apiGetTournament(process.env.API_TOURNAMENT_ID);
-  const kvinneKlassen = result["Klasser"][0]["Lag"];
-  const gutteKlassen = result["Klasser"][1]["Lag"];
-  log(`K: ${kvinneKlassen}`);
-  log(`G: ${gutteKlassen}`);
-  const both = gutteKlassen.concat(kvinneKlassen);
-  for (let team of both) {
+  let allTeams = [];
+  result["Klasser"].map(klasse => {
+    const teams = klasse["Lag"];
+    log(`${klasse.Klasse}: ${JSON.stringify(teams)}`);
+    allTeams = allTeams.concat(teams);
+  });
+  log("allTeams.length", allTeams.length);
+  for (let team of allTeams) {
     const { Klasse, Spiller_1, Spiller_2, Lagnavn } = team;
     const p1 = await apiGetPlayer(Spiller_1);
     const { ProfixioId: profixioIdSpiller1 } = p1;

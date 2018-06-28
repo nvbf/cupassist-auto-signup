@@ -1,27 +1,24 @@
 require("dotenv").config();
 
-const shortName = process.env.shortName;
-const turneringsId = process.env.turneringsId;
-const matchId = process.env.matchId;
+const { TX_TURNERING_ID, TX_SHORTNAME, TX_PASSWORD } = process.env;
 
+const shortName = process.env.TX_SHORTNAME;
+const password = process.env.TX_PASSWORD;
+const turneringsId = TX_TURNERING_ID;
+
+const matchId = process.env.matchId;
 const setHome = process.env.setHome;
 const setAway = process.env.setAway;
-
 const set1HomePoints = process.env.set1HomePoints;
 const set1AwayPoints = process.env.set1AwayPoints;
-
 const set2HomePoints = process.env.set2HomePoints;
 const set2AwayPoints = process.env.set2AwayPoints;
-
 const set3HomePoints = process.env.set3HomePoints;
 const set3AwayPoints = process.env.set3AwayPoints;
-
 const homeTeamWon = process.env.homeTeamWon;
 
-const password = process.env.password;
-
 console.log(
-  `Args:  ${shortName} ${turneringsId} ${matchId} ${set1HomePoints} ${set1AwayPoints} ${set2HomePoints} ${set2AwayPoints} ${set3HomePoints} ${set3AwayPoints} ${homeTeamWon} ${password}`
+  `Args:  ${shortName} ${password} ${turneringsId} ${matchId} ${set1HomePoints} ${set1AwayPoints} ${set2HomePoints} ${set2AwayPoints} ${set3HomePoints} ${set3AwayPoints} ${homeTeamWon} `
 );
 
 module.exports = {
@@ -36,6 +33,7 @@ module.exports = {
       .url(
         `https://www.profixio.com/res/matches/register/${turneringsId}/${matchId}`
       )
+      .waitForElementVisible("#kamp_kamp_hmaal", 4000)
       .clearValue("#kamp_kamp_hmaal")
       .setValue("#kamp_kamp_hmaal", setHome)
       .clearValue("#kamp_kamp_bmaal")
