@@ -5,19 +5,8 @@ const { API_URL } = process.env;
 const axios = require("axios");
 
 async function apiGetTournament(id) {
-  const tournaments = await apiGetTournaments(`?TurneringsId=${id}&Lag=True`);
-  const tournamentArray = tournaments.filter(
-    ({ TurneringsId }) => TurneringsId == id
-  );
-  if (tournamentArray.length === 0) {
-    return { noSuchTournament: "No such tournamentID" };
-  }
-  return tournamentArray[0];
-}
-
-async function apiGetTournaments(extraQueryString = "") {
-  log(`request URL: ${API_URL}/tournaments${extraQueryString}`);
-  const result = await axios.get(`${API_URL}/tournaments${extraQueryString}`);
+  log(`request URL: ${API_URL}/tournaments/${id}`);
+  const result = await axios.get(`${API_URL}/tournaments/${id}`);
   const data = getData(result);
   return data;
 }
@@ -51,14 +40,16 @@ async function apiGetPlayers() {
 
 async function main() {
   const result = await apiGetTournament(process.env.API_TOURNAMENT_ID);
+  console.log(result);
   let allTeams = [];
-  result["Klasser"].map(klasse => {
-    const teams = klasse["Lag"];
+  result["classes"].map(klasse => {
+    const teams = klasse["teams"];
     log(`${klasse.Klasse}: ${JSON.stringify(teams)}`);
     allTeams = allTeams.concat(teams);
   });
   log("allTeams.length", allTeams.length);
   for (let team of allTeams) {
+    // log(`Team: ${team}`);
     const { Klasse, Spiller_1, Spiller_2, Lagnavn } = team;
     const p1 = await apiGetPlayer(Spiller_1);
     const { ProfixioId: profixioIdSpiller1 } = p1;
