@@ -52,8 +52,6 @@ async function main() {
   }
 }
 
-main();
-
 async function outputRegisterTeam(klasse, team) {
   const { Spiller_1, Spiller_2, Lagnavn } = team;
   const p1 = await apiGetPlayer(Spiller_1);
@@ -104,7 +102,7 @@ const exec = util.promisify(require("child_process").exec);
 
 async function runNightwatch(args) {
   const {
-    Klasse,
+    klasse,
     profixioIdSpiller1,
     profixioIdSpiller2,
     firstName1,
@@ -113,7 +111,7 @@ async function runNightwatch(args) {
     lastName2
   } = args;
 
-  const command = `-s "${Klasse}" -s "${profixioIdSpiller1}" -s "${firstName1}" -s "${lastName1}" -s "${profixioIdSpiller2}" -s "${firstName2}" -s "${lastName2}"`;
+  const command = `-s "${klasse}" -s "${profixioIdSpiller1}" -s "${firstName1}" -s "${lastName1}" -s "${profixioIdSpiller2}" -s "${firstName2}" -s "${lastName2}"`;
   try {
     console.log(`./node_modules/.bin/nightwatch main.js ${command}`);
     //const { stdout, stderr } = await exec(`nightwatch main.js ${command}`);
@@ -123,3 +121,5 @@ async function runNightwatch(args) {
     console.log(`Catch error on ${lastName1} ${lastName2} continue with next`);
   }
 }
+
+main();
