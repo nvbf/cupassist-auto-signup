@@ -73,15 +73,3 @@ Red means problems ;)
 - some of the players have duplicates entries, this could lead to a problem.
 - the tournament needs to be open for ppl to signup. So if this fails, check if
   you are able to sign someone up manually
-
-# Auto register result from [beachvolley-scoreboard](github.com/nvbf/beachvolleyball-scoreboard) to profixio (fx)
-
-## Run:
-
-`node run-register-torunament.js`
-
-check that you have an `.env` fil set with all needed variables. See
-`.env.sample` for needed env.var.
-
-The most common problem is that your chrome and chromedriver is a mismatch. so
-if you have problem check if that is your problme.

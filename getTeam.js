@@ -40,67 +40,64 @@ async function apiGetPlayers() {
 
 async function main() {
   const result = await apiGetTournament(process.env.API_TOURNAMENT_ID);
-  console.log(result);
-  let allTeams = [];
-  result["classes"].map(klasse => {
-    const teams = klasse["teams"];
-    log(`${klasse.Klasse}: ${JSON.stringify(teams)}`);
-    allTeams = allTeams.concat(teams);
-  });
-  log("allTeams.length", allTeams.length);
-  for (let team of allTeams) {
-    // log(`Team: ${team}`);
-    const { Klasse, Spiller_1, Spiller_2, Lagnavn } = team;
-    const p1 = await apiGetPlayer(Spiller_1);
-    const { ProfixioId: profixioIdSpiller1 } = p1;
-
-    const p2 = await apiGetPlayer(Spiller_2);
-    const { ProfixioId: profixioIdSpiller2 } = p2;
-    const spiller1Navn = Lagnavn.split("/")[0].trim();
-    const spiller2Navn = Lagnavn.split("/")[1].trim();
-    const firstName1 = spiller1Navn
-      .split(" ")
-      .reverse()
-      .slice(1)
-      .reverse()
-      .join(" ")
-      .trim();
-    const firstName2 = spiller2Navn
-      .split(" ")
-      .reverse()
-      .slice(1)
-      .reverse()
-      .join(" ")
-      .trim();
-    const lastName1 = spiller1Navn
-      .split(" ")
-      .reverse()[0]
-      .trim();
-    const lastName2 = spiller2Navn
-      .split(" ")
-      .reverse()[0]
-      .trim();
-    // log("------")
-    // log(Klasse)
-    // log(Spiller_1)
-    // log(spiller1Navn)
-    // log(lastName1)
-    // log(Spiller_2)
-    // log(spiller2Navn)
-    // log(lastName2)
-    await runNightwatch({
-      Klasse,
-      profixioIdSpiller1,
-      profixioIdSpiller2,
-      firstName1,
-      firstName2,
-      lastName1,
-      lastName2
-    });
+  const classes = result["classes"];
+  for (var index = 0; index < classes.length; index++) {
+    const { klasse, teams } = classes[index];
+    log(`${klasse}: ${JSON.stringify(teams)}`);
+    for (var index2 = 0; index2 < teams.length; index2++) {
+      const team = teams[index2];
+      log(`Team: ${JSON.stringify(team)}`);
+      await outputRegisterTeam(klasse, team);
+    }
   }
 }
 
 main();
+
+async function outputRegisterTeam(klasse, team) {
+  const { Spiller_1, Spiller_2, Lagnavn } = team;
+  const p1 = await apiGetPlayer(Spiller_1);
+  const { ProfixioId: profixioIdSpiller1 } = p1;
+
+  const p2 = await apiGetPlayer(Spiller_2);
+  const { ProfixioId: profixioIdSpiller2 } = p2;
+  const spiller1Navn = Lagnavn.split("/")[0].trim();
+  const spiller2Navn = Lagnavn.split("/")[1].trim();
+  const firstName1 = getFirstname(spiller1Navn);
+  const firstName2 = getFirstname(spiller2Navn);
+  const lastName1 = getLastName(spiller1Navn);
+  const lastName2 = getLastName(spiller2Navn);
+  await runNightwatch({
+    klasse,
+    profixioIdSpiller1,
+    profixioIdSpiller2,
+    firstName1,
+    firstName2,
+    lastName1,
+    lastName2
+  });
+}
+
+// Lastname is the last name, everything else is part of the firstname
+function getFirstname(fullname) {
+  const firstName = fullname
+    .split(" ")
+    .reverse()
+    .slice(1)
+    .reverse()
+    .join(" ")
+    .trim();
+  return firstName;
+}
+
+// lastname is always just the last word.
+function getLastName(fullname) {
+  const lastname = fullname
+    .split(" ")
+    .reverse()[0]
+    .trim();
+  return lastname;
+}
 
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);

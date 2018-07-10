@@ -54,7 +54,7 @@ module.exports = {
             document.getElementsByTagName("input")[4].value = lastName2;
             document.getElementsByTagName("input")[5].value = firstName2;
             document.getElementById("subm_btt").disabled = false;
-            return args;
+            return done();
           },
           [player1id, player2id, lastName1, firstName1, lastName2, firstName2],
           done
